@@ -2,6 +2,9 @@
 
 import { Injectable } from '@angular/core';
 import { Reservation } from '../models/reservation';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -9,14 +12,18 @@ export class ReservationService {
   private reservations: Reservation[] = []; //An array to store reservations.
 
   // constructor is getting loaded before ngOnInit()
-  constructor() {
-    // localStorage.getItem('reservations') retrieves stored reservations
-    let savedReservation = localStorage.getItem('reservations');
-    this.reservations = savedReservation ? JSON.parse(savedReservation) : [];
-  }
+  // part 3: remove this in order to bring data from api
+  // constructor() {
+  //   // localStorage.getItem('reservations') retrieves stored reservations
+  //   let savedReservation = localStorage.getItem('reservations');
+  //   this.reservations = savedReservation ? JSON.parse(savedReservation) : [];
+  // }
 
   // CRUD
   // this is for getting all the reservations
+
+  // CRUD
+
   getReservations(): Reservation[] {
     //getReservations(): return all reservations.
     //this means we return a value of type Reservation
@@ -36,14 +43,14 @@ export class ReservationService {
     reservation.id = Date.now().toString();
     //adds a new reservation
     this.reservations.push(reservation);
-    localStorage.setItem('reservations', JSON.stringify(this.reservations));
+    // localStorage.setItem('reservations', JSON.stringify(this.reservations));
   }
 
   deleteReservation(id: string): void {
     //delete a reservation by id.
     let index = this.reservations.findIndex((res) => res.id === id);
     this.reservations.splice(index, 1); //so we get the index of reservation we want to delete.
-    localStorage.setItem('reservations', JSON.stringify(this.reservations));
+    // localStorage.setItem('reservations', JSON.stringify(this.reservations));
   }
 
   updateReservation(id: string, updatedReservation: Reservation): void {
@@ -52,6 +59,6 @@ export class ReservationService {
       (res) => res.id === updatedReservation.id
     );
     this.reservations[index] = updatedReservation;
-    localStorage.setItem('reservations', JSON.stringify(this.reservations));
+    // localStorage.setItem('reservations', JSON.stringify(this.reservations));
   }
 }
